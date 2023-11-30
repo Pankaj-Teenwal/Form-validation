@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/src/index.css" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div class="main border-2 border-indigo-400">
+      <form action="" id="form">
+        <div class="form-elem flex items-center justify-center gap-12 my-4">
+          <div><label for="f-name">First Name</label></div>
+
+          <div>
+            <input
+              type="text"
+              id="fName"
+              class="border-2 slate-300 outline-none"
+            />
+          </div>
+
+          <span id="nameErr"></span>
+        </div>
+
+        <div class="form-elem flex items-center justify-center gap-12 my-4">
+          <div><label for="m-name">Middle Name</label></div>
+
+          <div>
+            <input
+              type="text"
+              id="m-name"
+              class="border-2 slate-300 outline-none"
+            />
+          </div>
+
+          <span id="mNameErr"></span>
+        </div>
+
+        <div class="form-elem flex items-center justify-center gap-12 my-4">
+          <div><label for="l-name">Last Name</label></div>
+          <div>
+            <input type="text" id="lName" class="border-2 slate-300 outline-none" />
+          </div>
+          <span id="lNameErr"></span>
+        </div>
+
+        <div class="form-elem flex items-center justify-center gap-12 my-4">
+          <div><label for="e-mail">Email</label></div>
+          <div>
+            <input type="email" id="eMail" placeholder="abc@example.com" class="border-2 slate-300 outline-none" />
+          </div>
+          <span id="emailErr"></span>
+        </div>
+
+
+        <div class="form-elem flex items-center justify-center gap-12 my-4">
+          <div><label for="pass">Password</label></div>
+          <div><input type="password" id="pass" class="border-2 slate-300 outline-none" /></div>
+          <span id="passErr"></span>
+        </div>
+
+
+        <div class="form-elem flex items-center justify-center gap-12 my-4">
+          <div><label for="c-pass">Confirm password</label></div>
+          <div><input type="password" id="cPass" class="border-2 slate-300 outline-none" /></div>
+          <span id="cPassErr"></span>
+        </div>
+
+        <div class="form-elem flex items-center justify-center gap-12 my-4">
+          <div>
+            <label for="date">Date of Birth</label>
+          </div>
+          <div>
+            <input type="date" id="date" class="border-2 slate-300 outline-none" />
+          </div>
+          <span id="dateEmpty"></span>
+        </div>
+
+        <div class="form-elem flex items-center justify-center gap-12 my-4">
+          <div><label for="git-link">GitHub Profile link</label></div>
+          <div><input type="text" id="gitLink" class="border-2 slate-300 outline-none " /></div>
+          <span id="gitErr"></span>
+        </div>
+
+        <div class="form-elem flex items-center justify-center gap-12 my-4">
+          <div><label for="linked-in">LinkedIn Profile Link</label></div>
+          <div><input type="tet" id="linkedIn" class="border-2 slate-300"/></div>
+          <span id="linkedInErr"></span>
+        </div>
+
+        <div class="submit flex items-center justify-center">
+          <input type="submit" name="submit" id="submit" class="border-2 slate-300 px-2" />
+        </div>
+      </form>
+    </div>
+  </body>
+</html>
+
+<script type="module">
+  // Import the functions you need from the SDKs you need
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.3.1/firebase-app.js";
+  // TODO: Add SDKs for Firebase products that you want to use
+  // https://firebase.google.com/docs/web/setup#available-libraries
+
+  // Your web app's Firebase configuration
+  const firebaseConfig = {
+    apiKey: "AIzaSyBjKOLAtvTaqd2fZWwOlyK18NulJArZbRc",
+    authDomain: "form-validation-9ca99.firebaseapp.com",
+    databaseURL: "https://form-validation-9ca99-default-rtdb.firebaseio.com",
+    projectId: "form-validation-9ca99",
+    storageBucket: "form-validation-9ca99.appspot.com",
+    messagingSenderId: "8257204603",
+    appId: "1:8257204603:web:ba688a8d131891fde60dde",
+  };
+
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+
+  const firstName = document.getElementById("fName");
+  const middelName = document.getElementById("m-name");
+  const lastName = document.getElementById("lName");
+  const email = document.getElementById("eMail");
+  const passWord = document.getElementById("pass");
+  const cpass = document.getElementById("cPass");
+  const dob = document.getElementById("date");
+  const checkGitLink = document.getElementById("gitLink");
+  const checkLinkedIn = document.getElementById("linkedIn");
+  const validateSubmit = document.getElementById("submit");
+  //first-Name
+  firstName.addEventListener("blur", function (e) {
+    const { value } = e.target;
+    //console.log({value})
+    const toggleErr = document.getElementById("nameErr");
+    if (!value) {
+      e.target.style.border = "1px solid red";
+    } else if (!/^[A-Z \n a-z]+$/.test(value)) {
+      console.log(toggleErr);
+      toggleErr.innerText = "Enter Characters Only!";
+      e.target.style.border = "1px solid red";
+      toggleErr.style.display = "block";
+    } else {
+      toggleErr.style.display = "none";
+      e.target.style.border = "";
+    }
+  });
+
+  //middel-name
+  middelName.addEventListener("blur", function (e) {
+    const { value } = e.target;
+    const toggleErr = document.getElementById("mNameErr");
+    if (value) {
+      if (!/^[A-Z \n a-z]+$/.test(value)) {
+        toggleErr.innerText = "Enter Characters Only!";
+        e.target.style.border = "1px solid red";
+        toggleErr.style.display = "block";
+      }
+    } else {
+      toggleErr.style.display = "none";
+      e.target.style.border = "";
+    }
+  });
+  //last name
+  lastName.addEventListener("blur", function (e) {
+    const { value } = e.target;
+    const toggleErr = document.getElementById("lNameErr");
+    if (!value) {
+      e.target.style.border = "1px solid red";
+    } else if (!/^[A-Z \na-z]+$/.test(value)) {
+      toggleErr.innerText = "Enter Characters Only!";
+      e.target.style.border = "1px solid red";
+      toggleErr.style.display = "block";
+    } else {
+      toggleErr.style.display = "none";
+      e.target.style.border = "";
+    }
+  });
+  // email
+  email.addEventListener("blur", function (e) {
+    const { value } = e.target;
+    const toggleErr = document.getElementById("emailErr");
+    if (!value) {
+      e.target.style.border = "1px solid red";
+    } else if (!/^[\w\.-]+@[a-zA-Z\d\.-]+\.[a-zA-Z]{2,}$/.test(value)) {
+      toggleErr.innerText = "Please Enter Valid Email";
+      e.target.style.border = "1px solid red";
+      toggleErr.style.display = "block";
+    } else {
+      toggleErr.style.display = "none";
+      e.target.style.border = "";
+    }
+  });
+  //password
+  passWord.addEventListener("blur", function (e) {
+    const { value } = e.target;
+    const toggleErr = document.getElementById("passErr");
+    if (!value) {
+      e.target.style.border = "1px solid red";
+    } else if (
+      !/[A-Z]/.test(value) ||
+      !/[0-9]/.test(value) ||
+      !/[!@#$%^&*]/.test(value) ||
+      value.length < 8
+    ) {
+      toggleErr.innerHTML = "Please Enter Valid Password";
+      e.target.style.border = "1px solid red";
+      toggleErr.style.display = "block";
+    } else {
+      toggleErr.style.display = "none";
+      e.target.style.border = "";
+    }
+  });
+  //confirm password
+  cpass.addEventListener("blur", function (e) {
+    const { value } = e.target;
+    const password = document.getElementById("pass");
+    const passwordValue = passWord.value;
+    const toggleErr = document.getElementById("cPassErr");
+    if (!value) {
+      e.target.style.border = "1px solid red";
+    } else if (!(value === passwordValue)) {
+      toggleErr.innerText = "Password Doesn't Match";
+      e.target.style.border = "1px solid red";
+      toggleErr.style.display = "block";
+    } else {
+      toggleErr.style.display = "none";
+      e.target.style.border = "";
+    }
+  });
+
+  //date
+  dob.addEventListener("blur", () => {
+    const isEmpty = dob.value;
+    const inputDate = new Date(dob.value);
+    const currentDate = new Date();
+    currentDate.setHours(0, 0, 0, 0);
+
+    const toggleErr = document.getElementById("dateEmpty");
+
+    if (!isEmpty) {
+      dob.style.border = "1px solid red";
+    } else if (inputDate > currentDate) {
+      console.log("inside the date else if");
+      toggleErr.innerText = "Please Enter Valid Date";
+      dob.style.border = "1px solid red";
+      toggleErr.style.display = "block";
+    } else {
+      toggleErr.style.display = "none";
+      dob.style.border = "";
+    }
+  });
+
+  //check Git link
+  checkGitLink.addEventListener("blur", function (e) {
+    const { value } = e.target;
+    const toggleErr = document.getElementById("gitErr");
+    if (!value) {
+      e.target.style.border = "1px solid red";
+    } else if (value.indexOf("https://github.com/") !== 0) {
+      toggleErr.innerText = "Please Enter Valid Link";
+      e.target.style.border = "1px solid red";
+      toggleErr.style.display = "block";
+    } else {
+      toggleErr.style.display = "none";
+      e.target.style.border = "";
+    }
+  });
+  //check linkedIn link
+  checkLinkedIn.addEventListener("blur", function (e) {
+    const { value } = e.target;
+    const toggleErr = document.getElementById("linkedInErr");
+    if (!value) {
+      e.target.style.border = "1px solid red";
+    } else if (value.indexOf("https://www.linkedin.com/") !== 0) {
+      toggleErr.innerText = "Please Enter Valid Link";
+      e.target.style.border = "1px solid red";
+      toggleErr.style.display = "block";
+    } else {
+      toggleErr.style.display = "none";
+      e.target.style.border = "";
+    }
+  });
+
+  // Submit Button validation
+
+  validateSubmit.addEventListener("click", function (e) {
+    e.preventDefault();
+
+    if (!firstName.value) {
+      const toggleErr = document.getElementById("nameErr");
+      toggleErr.innerText = "Field Can't Be empty";
+      toggleErr.style.display = "block";
+    }
+
+    if (!lastName.value) {
+      const toggleErr = document.getElementById("lNameErr");
+      toggleErr.innerText = "Field Can't Be empty";
+      toggleErr.style.display = "block";
+    }
+
+    if (!email.value) {
+      const toggleErr = document.getElementById("emailErr");
+      toggleErr.innerText = "Field Can't Be empty";
+      toggleErr.style.display = "block";
+    }
+
+    if (!passWord.value) {
+      const toggleErr = document.getElementById("passErr");
+      toggleErr.innerText = "Field Can't Be empty";
+      toggleErr.style.display = "block";
+    }
+    if (!cpass.value) {
+      const toggleErr = document.getElementById("cPassErr");
+      toggleErr.innerText = "Field Can't Be empty";
+      toggleErr.style.display = "block";
+    }
+
+    if (!dob.value) {
+      const toggleErr = document.getElementById("dateEmpty");
+      toggleErr.innerText = "Field Can't Be empty";
+      toggleErr.style.display = "block";
+    }
+
+    if (!checkGitLink.value) {
+      const toggleErr = document.getElementById("gitErr");
+      toggleErr.innerText = "Field Can't Be empty";
+      toggleErr.style.display = "block";
+    }
+
+    if (!checkLinkedIn.value) {
+      const toggleErr = document.getElementById("linkedInErr");
+      toggleErr.innerText = "Field Can't Be empty";
+      toggleErr.style.display = "block";
+    }
+  });
+</script>
+
+<!--
+    wellfound
+instahyre
+linkdin
+cushort
+naukri
+/*Frontend Engineerproficient in developing responsive webapplications with ReactJS andJavaScript (ES6/7). Seeking a core teamrole to leverage my skills and contributeas a valuable asset to a firm.*/
+-->
